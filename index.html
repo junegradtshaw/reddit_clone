@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="RedditClone">
+<head>
+  <meta charset="UTF-8">
+  <title>Reddit Clone</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
+  <script type="text/javascript" src = "index.js"></script>
+  <link rel="stylesheet" href="styles/master.css" media="screen" title="no title" charset="utf-8">
+</head>
+<body ng-controller="MyController">
+  <div class = "post" ng-repeat = "site in sites">
+    <section class = "postImage">
+      <!-- <span class = "helper"></span> -->
+      <img src="{{site.image}}" alt="">
+    </section>
+    <section class = "postText">
+      <span class = "title">{{site.title}}</span>
+      <i class="fa fa-arrow-up"></i>
+      <i class="fa fa-arrow-down"></i>
+      <span>{{site.votes}}</span>
+      <h5 class = "author">By {{site.author}}</h5>
+      <p>{{site.description}}</p>
+      <span class = "date border-right">{{site.timeStamp}}</span>
+      <section ng-click="showComments=true">
+        <i class="fa fa-comment"></i>
+        <span>{{site.comments.length}}</span>
+        <ng-pluralize class = "border-right" count="site.comments.length"
+                       when="{1: ' comment',
+                       'other': ' comments'}">
+        </ng-pluralize>
+      </section>
+      <!-- <i class = "fa fa-pencil"></i>
+      <span ng-click="showme = true">Add Comment</span> -->
+      <!-- <form ng-show="showme">
+        <input type="text" ng-model="text">
+        <input type="text" ng-model="author">
+        <input type="submit" ng-click="addComment(site, comment, text)">
+      </form> -->
+      <div ng-show="showComments" ng-repeat="comment in site.comments">
+        <div>
+          <h5>{{comment.author}}</h5>
+          <p>{{comment.text}}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>
