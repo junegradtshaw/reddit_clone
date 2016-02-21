@@ -2,14 +2,29 @@
 <html lang="en" ng-app="RedditClone">
 <head>
   <meta charset="UTF-8">
-  <title>Reddit Clone</title>
+  <title>{{title}}</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.3/angular-moment.js"></script>
   <script type="text/javascript" src = "index.js"></script>
   <link rel="stylesheet" href="styles/master.css" media="screen" title="no title" charset="utf-8">
 </head>
 <body ng-controller="MyController">
-  <div class = "post" ng-repeat = "site in sites">
+  <nav>
+    <ul>
+      <li>
+        {{title}}
+      </li>
+      <li>
+        <i class="fa fa-plus"> Submit Post</i>
+      </li>
+      <li>
+        <input type="text" placeholder="Search" | filter:searchable >
+      </li>
+    </ul>
+  </nav>
+  <div class = "post" ng-repeat = "site in sites | orderBy: '-votes'">
     <section class = "postImage">
       <!-- <span class = "helper"></span> -->
       <img src="{{site.image}}" alt="">
@@ -18,11 +33,13 @@
       <span class = "title">{{site.title}}</span>
       <i class="fa fa-arrow-up" ng-click = "site.votes=site.votes+1"></i>
       <i class="fa fa-arrow-down" ng-click = "site.votes=site.votes-1"></i>
-      <span>{{site.votes}}</span>
+      <span ng-class="{ red: site.votes < 0, green: site.votes > 0 }">{{site.votes}}</span>
       <h5 class = "author">By {{site.author}}</h5>
       <p>{{site.description}}</p>
-      <span class = "date border-right">{{site.timeStamp}}</span>
-      <section ng-click="showComments=!showComments">
+      <i class="fa fa-calendar"></i>
+      <span class = "date border-right">{{site.date}}</span>
+      <!-- <span class = "date border-right">{{site.date | date:'yyyy-MM-dd' }}</span> -->
+      <section id = "comment-summary" ng-click="showComments=!showComments">
         <i class="fa fa-comment"></i>
         <span>{{site.comments.length}}</span>
         <ng-pluralize class = "border-right" count="site.comments.length"
@@ -33,14 +50,22 @@
       <i class = "fa fa-pencil"></i>
       <span ng-click="showAddComment = true">Add Comment</span>
       <form ng-show="showAddComment">
-        <input type="text" ng-model="text">
-        <input type="text" ng-model="author">
-        <input type="submit" ng-click="!showAddComment; addComment(site, comment, text)">
+        <label for="author">Name </label>
+        <input type="text" id = "author" label = "Name" placeholder="Enter your name" ng-model="author">
+        <label for="text">Comment </label>
+        <input type="text" id = "text" label = "Comment" placeholder="Enter comment" ng-model="text">
+        <!-- <input type="time" ng-model="time"> -->
+        <!-- <input type="text" ng-model="date" value=new Date()> -->
+        <input type="hidden" ng-model="date" value=new Date()>
+        <input type="submit" ng-click="showAddComment=!showAddComment; addComment(site, author, text)">
       </form>
       <div ng-show="showComments" ng-repeat="comment in site.comments">
         <div>
-          <h5>{{comment.author}}</h5>
-          <p>{{comment.text}}</p>
+          <p>{{comment.author}}{{"("}}{{comment.date | date:'yyyy-MM-dd'}}{{") - "}}{{comment.text}}</p>
+          <!-- <h5>{{comment.author}}{{"  "}}{{comment.date | moment: 'fromNow'}}</h5> -->
+          <!-- <time title="{{ comment.date | date:'yyyy-MM-dd HH:mm:ss Z'}}">{{ comment.date | moment: 'fromNow' }}</time> -->
+          <!-- <time title="{{ comment.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ main.time | amCalendar }}</time> -->
+          <!-- {{ comment.date |  moment: 'fromNow' }}">{{ main.time | amCalendar }}</time> -->
         </div>
       </div>
     </section>
