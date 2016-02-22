@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.3/angular-moment.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-moment/0.10.3/angular-moment.js"></script>
   <script type="text/javascript" src = "index.js"></script>
   <link rel="stylesheet" href="styles/master.css" media="screen" title="no title" charset="utf-8">
 </head>
@@ -28,18 +28,19 @@
         </select>
     </ul>
   </nav>
-  <form name = "postForm" novalidate ng-show="showAddPost" ng-submit="showAddPost = false; addPost(post)">
+  <form name = "postForm" novalidate ng-show="showAddPost" ng-submit="showAddPost = false">
     <label for="title">Title </label>
     <input type="text" id = "title" required ng-model="post.title">
     <label for="author">Name </label>
-    <input type="text" id = "author" ng-model="post.author">
+    <input type="text" id = "author" required ng-model="post.author">
     <label for="image">Image </label>
-    <input type="text" id = "image" ng-model="post.image">
+    <input type="text" id = "image" required ng-model="post.image">
     <label for="description">Description </label>
-    <input type="textarea" id = "description" ng-model="post.description">
-    <input type="submit" "Add Post" />
+    <input type="textarea" id = "description" required ng-model="post.description">
+    <button type="submit" ng-click="addPost(post)" ng-disabled="postForm.$invalid">Submit</button>
   </form>
-  <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy:0:'sort.descend' : sort.field">
+  <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: sort.field">
+    <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy:0:'-sort.descend' : sort.field"> -->
   <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: '-votes'"> -->
     <div id = "container">
       <section class = "postImage">
@@ -54,8 +55,7 @@
         <h5 class = "author">By {{site.author}}</h5>
         <p>{{site.description}}</p>
         <i class="fa fa-calendar"></i>
-        <span class = "date border-right">{{site.date}}</span>
-        <!-- <span class = "date border-right">{{site.date | date:'yyyy-MM-dd' }}</span> -->
+        <span class = "date border-right"><span am-time-ago="site.date"></span></span>
         <section id = "comment-summary" ng-click="showComments=!showComments">
           <i class="fa fa-comment"></i>
           <span>{{site.comments.length}}</span>
@@ -80,7 +80,11 @@
         </form>
         <div ng-show="showComments" ng-repeat="comment in site.comments">
           <div>
-            <p>{{comment.author}}{{"("}}{{comment.date | date:'yyyy-MM-dd'}}{{") - "}}{{comment.text}}</p>
+            <p>{{comment.author}}{{" ("}} <span am-time-ago="comment.date"></span> {{") - "}}{{comment.text}}</p>
+            <!-- <span am-time-ago="2016-02-20T15:58:58.909Z">WOW</span> -->
+            <!-- <p>{{comment.author}}{{"("}}<span a-time-ago="2016-02-20T15:58:58.909Z"></span> {{") - "}}{{comment.text}}</p> -->
+            <!-- <p>{{comment.author}}{{"("}}<span am-time-ago="comment.date"></span> {{") - "}}{{comment.text}}</p> -->
+            <!-- <p>{{comment.author}}{{"("}}{{comment.date | date:'yyyy-MM-dd'}}{{") - "}}{{comment.text}}</p> -->
             <!-- <h5>{{comment.author}}{{"  "}}{{comment.date | moment: 'fromNow'}}</h5> -->
             <!-- <time title="{{ comment.date | date:'yyyy-MM-dd HH:mm:ss Z'}}">{{ comment.date | moment: 'fromNow' }}</time> -->
             <!-- <time title="{{ comment.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ main.time | amCalendar }}</time> -->
