@@ -17,19 +17,33 @@
         {{title}}
       </li>
       <li>
-        <i class="fa fa-plus"> Submit Post</i>
+        <i class="fa fa-plus" ng-click="showAddPost=true"> Submit Post</i>
       </li>
       <li>
-        <input type="text" placeholder="Search" | filter:searchable >
+        <input type="text" placeholder="Search" ng-model="searchable.$" >
       </li>
+      <label for="sort"> Sort by  </label>
+        <select id = "sort" ng-init="sort=selections[0].field" ng-model="sort">
+          <option ng-repeat = "selection in selections">{{selection.field}}</option>
+        </select>
+      <!-- <span ng-click="showAddComment = true">Add Comment</span> -->
     </ul>
   </nav>
-  <div class = "post" ng-repeat = "site in sites | orderBy: '-votes'">
+  <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy:0:'sort.descend' : sort.field">
+  <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: '-votes'"> -->
+    <form ng-show="showAddPost" ng-submit="addPost(post)">
+      <input type="text" ng-model="post.title">
+      <input type="text" ng-model="post.image">
+      <input type="text" ng-model="post.description">
+      <input type="text" ng-model="post.votes">
+      <input type="text" ng-model="post.author">
+      <input type="submit" "Add Post" />
+    </form>
     <section class = "postImage">
       <!-- <span class = "helper"></span> -->
       <img src="{{site.image}}" alt="">
     </section>
-    <section class = "postText">
+    <section class = "postText" >
       <span class = "title">{{site.title}}</span>
       <i class="fa fa-arrow-up" ng-click = "site.votes=site.votes+1"></i>
       <i class="fa fa-arrow-down" ng-click = "site.votes=site.votes-1"></i>

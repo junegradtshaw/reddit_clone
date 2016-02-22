@@ -20,12 +20,19 @@ nav * li {
   margin: 5px;
 }
 
+form * {
+  display: inline-block;
+}
+
 .post {
   display: flex;
   margin-bottom: 10px;
   border: solid 2px black;
   background-color: #F8F6F8;
   width: 100%;
+  /*resize*/
+  /*overflow: scroll;*/
+  /*height: auto;*/
   /*overflow: auto;*/
   /*height: 250px;*/
 }
@@ -47,7 +54,7 @@ nav * li {
 
 .postText {
   width: 800px;
-  height: 150px;
+  /*height: 150px;*/
   margin: 1em 0;
 }
 
@@ -90,4 +97,14 @@ img {
 
 .green {
   color: green;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-bottom: 10px;
+  border: solid 2px black;
+  background-color: #F8F6F8;
+  width: 100%;
 }
