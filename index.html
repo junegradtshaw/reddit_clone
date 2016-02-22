@@ -72,10 +72,11 @@
           <label for="text">Comment </label>
           <input type="text" id = "text" label = "Comment" placeholder="Enter comment" required ng-model="commentFormText">
           <button type="submit" ng-click="addComment(site, commentFormAuthor, commentFormText)" ng-disabled="commentForm.$invalid">Submit</button>
-          <div class="alert"
+          <!-- <div class="alert"
+            ng-show="(commentForm.$invalid)">
             ng-show="((commentFormText.$error && commentFormAuthor.$dirty) || (commentFormText.$error && commentFormText.$dirty))">
             Please enter required fields!
-          </div>
+          </div> -->
         </form>
         <div ng-show="showComments" ng-repeat="comment in site.comments">
           <div>

@@ -10,9 +10,9 @@ app.controller("MyController", function($scope) {
 
   $scope.addComment = function(site, author, text) {
     site.comments.push({author: author, text: text, date: new Date()});
-    $scope.commentFormAuthor = "test";
-    $scope.commentFormText = "test";
-    $scope.showAddComment=!$scope.showAddComment;
+    $scope.commentFormAuthor = "";
+    $scope.commentFormText = "";
+    $scope.showAddComment=false;
   }
 
   $scope.addPost = function(post) {
