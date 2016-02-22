@@ -17,7 +17,7 @@
         {{title}}
       </li>
       <li>
-        <i class="fa fa-plus" ng-click="showAddPost=true"> Submit Post</i>
+        <i class="fa fa-plus" ng-init="showAddPost=false" ng-click="showAddPost=!showAddPost"> Submit Post</i>
       </li>
       <li>
         <input type="text" placeholder="Search" ng-model="searchable.$" >
@@ -26,64 +26,68 @@
         <select id = "sort" ng-init="sort=selections[0].field" ng-model="sort">
           <option ng-repeat = "selection in selections">{{selection.field}}</option>
         </select>
-      <!-- <span ng-click="showAddComment = true">Add Comment</span> -->
     </ul>
   </nav>
   <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy:0:'sort.descend' : sort.field">
   <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: '-votes'"> -->
-    <form ng-show="showAddPost" ng-submit="addPost(post)">
-      <input type="text" ng-model="post.title">
-      <input type="text" ng-model="post.image">
-      <input type="text" ng-model="post.description">
-      <input type="text" ng-model="post.votes">
-      <input type="text" ng-model="post.author">
+    <form name = "postForm" novalidate ng-show="showAddPost" ng-submit="showAddPost = false; addPost(post)">
+      <label for="title">Title </label>
+      <input type="text" id = "title" required ng-model="post.title">
+      <label for="author">Name </label>
+      <input type="text" id = "author" ng-model="post.author">
+      <label for="image">Image </label>
+      <input type="text" id = "image" ng-model="post.image">
+      <label for="description">Description </label>
+      <input type="textarea" id = "description" ng-model="post.description">
       <input type="submit" "Add Post" />
     </form>
-    <section class = "postImage">
-      <!-- <span class = "helper"></span> -->
-      <img src="{{site.image}}" alt="">
-    </section>
-    <section class = "postText" >
-      <span class = "title">{{site.title}}</span>
-      <i class="fa fa-arrow-up" ng-click = "site.votes=site.votes+1"></i>
-      <i class="fa fa-arrow-down" ng-click = "site.votes=site.votes-1"></i>
-      <span ng-class="{ red: site.votes < 0, green: site.votes > 0 }">{{site.votes}}</span>
-      <h5 class = "author">By {{site.author}}</h5>
-      <p>{{site.description}}</p>
-      <i class="fa fa-calendar"></i>
-      <span class = "date border-right">{{site.date}}</span>
-      <!-- <span class = "date border-right">{{site.date | date:'yyyy-MM-dd' }}</span> -->
-      <section id = "comment-summary" ng-click="showComments=!showComments">
-        <i class="fa fa-comment"></i>
-        <span>{{site.comments.length}}</span>
-        <ng-pluralize class = "border-right" count="site.comments.length"
-                       when="{1: ' comment',
-                       'other': ' comments'}">
-        </ng-pluralize>
+    <div id = "container">
+      <section class = "postImage">
+        <!-- <span class = "helper"></span> -->
+        <img src="{{site.image}}" alt="">
       </section>
-      <i class = "fa fa-pencil"></i>
-      <span ng-click="showAddComment = true">Add Comment</span>
-      <form ng-show="showAddComment">
-        <label for="author">Name </label>
-        <input type="text" id = "author" label = "Name" placeholder="Enter your name" ng-model="author">
-        <label for="text">Comment </label>
-        <input type="text" id = "text" label = "Comment" placeholder="Enter comment" ng-model="text">
-        <!-- <input type="time" ng-model="time"> -->
-        <!-- <input type="text" ng-model="date" value=new Date()> -->
-        <input type="hidden" ng-model="date" value=new Date()>
-        <input type="submit" ng-click="showAddComment=!showAddComment; addComment(site, author, text)">
-      </form>
-      <div ng-show="showComments" ng-repeat="comment in site.comments">
-        <div>
-          <p>{{comment.author}}{{"("}}{{comment.date | date:'yyyy-MM-dd'}}{{") - "}}{{comment.text}}</p>
-          <!-- <h5>{{comment.author}}{{"  "}}{{comment.date | moment: 'fromNow'}}</h5> -->
-          <!-- <time title="{{ comment.date | date:'yyyy-MM-dd HH:mm:ss Z'}}">{{ comment.date | moment: 'fromNow' }}</time> -->
-          <!-- <time title="{{ comment.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ main.time | amCalendar }}</time> -->
-          <!-- {{ comment.date |  moment: 'fromNow' }}">{{ main.time | amCalendar }}</time> -->
+      <section class = "postText" >
+        <span class = "title">{{site.title}}</span>
+        <i class="fa fa-arrow-up" ng-click = "site.votes=site.votes+1"></i>
+        <i class="fa fa-arrow-down" ng-click = "site.votes=site.votes-1"></i>
+        <span ng-class="{ red: site.votes < 0, green: site.votes > 0 }">{{site.votes}}</span>
+        <h5 class = "author">By {{site.author}}</h5>
+        <p>{{site.description}}</p>
+        <i class="fa fa-calendar"></i>
+        <span class = "date border-right">{{site.date}}</span>
+        <!-- <span class = "date border-right">{{site.date | date:'yyyy-MM-dd' }}</span> -->
+        <section id = "comment-summary" ng-click="showComments=!showComments">
+          <i class="fa fa-comment"></i>
+          <span>{{site.comments.length}}</span>
+          <ng-pluralize class = "border-right" count="site.comments.length"
+                         when="{1: ' comment',
+                         'other': ' comments'}">
+          </ng-pluralize>
+        </section>
+        <i class = "fa fa-pencil"></i>
+        <span ng-init="showAddComments=false" ng-click="showAddComments=!showAddComments">Add Comment</span>
+        <form name = "commentForm" novalidate ng-show="showAddComments" ng-submit="showAddComments=false" ng-model="commentForm">
+          <label for="author">Name </label>
+          <input type="text" id = "author" label = "Name" placeholder="Enter your name" required ng-model="commentFormAuthor">
+          <label for="text">Comment </label>
+          <input type="text" id = "text" label = "Comment" placeholder="Enter comment" required ng-model="commentFormText">
+          <button type="submit" ng-click="addComment(site, author, text)" ng-disabled="commentForm.$invalid">Submit</button>
+          <div class="alert"
+            ng-show="((commentFormAuthor.$error.required && commentFormAuthor.$dirty) || (commentFormText.$error.required && commentFormText.$dirty))">
+            Please enter required fields!
+          </div>
+        </form>
+        <div ng-show="showComments" ng-repeat="comment in site.comments">
+          <div>
+            <p>{{comment.author}}{{"("}}{{comment.date | date:'yyyy-MM-dd'}}{{") - "}}{{comment.text}}</p>
+            <!-- <h5>{{comment.author}}{{"  "}}{{comment.date | moment: 'fromNow'}}</h5> -->
+            <!-- <time title="{{ comment.date | date:'yyyy-MM-dd HH:mm:ss Z'}}">{{ comment.date | moment: 'fromNow' }}</time> -->
+            <!-- <time title="{{ comment.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ main.time | amCalendar }}</time> -->
+            <!-- {{ comment.date |  moment: 'fromNow' }}">{{ main.time | amCalendar }}</time> -->
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   </div>
-
 </body>
 </html>

@@ -10,13 +10,17 @@ app.controller("MyController", function($scope) {
 
   $scope.addComment = function(site, author, text) {
     site.comments.push({author: author, text: text, date: new Date()});
+    $scope.commentFormAuthor = null;
+    $scope.commentFormText = null;
+    $scope.showAddComment=!$scope.showAddComment;
   }
 
   $scope.addPost = function(post) {
-    $scope.sites.push({title: title, image: image, description: description, votes: votes, author: author, date: new Date()})
-    $scope.showAddPost=false;
+    $scope.sites.push({title: post.title, author: post.author, image: post.image, description: post.description, votes: 0, comments: [], date: new Date()})
+    $scope.showAddPost=!$scope.showAddPost;
   }
 
-  $scope.showComments
+  $scope.resetCommentForm = function() {
+  }
 
 });

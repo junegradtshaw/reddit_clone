@@ -21,11 +21,21 @@ nav * li {
 }
 
 form * {
-  display: inline-block;
+  display: block;
+  width: 300px;
+  margin: 0 auto;
+}
+
+textarea {
+  width: 300px;
+  height: 100px;
+}
+#container {
+  display: block;
 }
 
 .post {
-  display: flex;
+  /*display: flex;*/
   margin-bottom: 10px;
   border: solid 2px black;
   background-color: #F8F6F8;
@@ -107,4 +117,12 @@ img {
   border: solid 2px black;
   background-color: #F8F6F8;
   width: 100%;
+}
+
+.alert {
+  background-color: #F1DEDE;
+}
+
+.has-error {
+  background-color: #F1DEDE;
 }
