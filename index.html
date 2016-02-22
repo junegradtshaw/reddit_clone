@@ -28,19 +28,19 @@
         </select>
     </ul>
   </nav>
+  <form name = "postForm" novalidate ng-show="showAddPost" ng-submit="showAddPost = false; addPost(post)">
+    <label for="title">Title </label>
+    <input type="text" id = "title" required ng-model="post.title">
+    <label for="author">Name </label>
+    <input type="text" id = "author" ng-model="post.author">
+    <label for="image">Image </label>
+    <input type="text" id = "image" ng-model="post.image">
+    <label for="description">Description </label>
+    <input type="textarea" id = "description" ng-model="post.description">
+    <input type="submit" "Add Post" />
+  </form>
   <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy:0:'sort.descend' : sort.field">
   <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: '-votes'"> -->
-    <form name = "postForm" novalidate ng-show="showAddPost" ng-submit="showAddPost = false; addPost(post)">
-      <label for="title">Title </label>
-      <input type="text" id = "title" required ng-model="post.title">
-      <label for="author">Name </label>
-      <input type="text" id = "author" ng-model="post.author">
-      <label for="image">Image </label>
-      <input type="text" id = "image" ng-model="post.image">
-      <label for="description">Description </label>
-      <input type="textarea" id = "description" ng-model="post.description">
-      <input type="submit" "Add Post" />
-    </form>
     <div id = "container">
       <section class = "postImage">
         <!-- <span class = "helper"></span> -->
@@ -71,9 +71,9 @@
           <input type="text" id = "author" label = "Name" placeholder="Enter your name" required ng-model="commentFormAuthor">
           <label for="text">Comment </label>
           <input type="text" id = "text" label = "Comment" placeholder="Enter comment" required ng-model="commentFormText">
-          <button type="submit" ng-click="addComment(site, author, text)" ng-disabled="commentForm.$invalid">Submit</button>
+          <button type="submit" ng-click="addComment(site, commentFormAuthor, commentFormText)" ng-disabled="commentForm.$invalid">Submit</button>
           <div class="alert"
-            ng-show="((commentFormAuthor.$error.required && commentFormAuthor.$dirty) || (commentFormText.$error.required && commentFormText.$dirty))">
+            ng-show="((commentFormText.$error && commentFormAuthor.$dirty) || (commentFormText.$error && commentFormText.$dirty))">
             Please enter required fields!
           </div>
         </form>
