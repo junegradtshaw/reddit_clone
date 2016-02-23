@@ -138,8 +138,8 @@ img {
 }
 
 .fade.ng-hide-add {
-  animation:0.5s flipOutX ease;
-  /*animation:0.5s lightSpeedOut ease;*/
+  /*animation:0.5s flipOutX ease;*/
+  animation:0.5s lightSpeedOut ease;
 }
 
 .fade.ng-hide-remove {
