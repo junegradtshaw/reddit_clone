@@ -24,7 +24,12 @@
       </li>
       <label for="sort"> Sort by  </label>
         <select id = "sort" ng-init="sort=selections[0].field" ng-model="sort">
+        <!-- <select id = "sort" ng-init="sort=selections[0].field; descend=selections[0].descend" ng-model="sort"> -->
+        <select ng-options"k as v for (k,v) in Array/Obj"></select>
+
           <option ng-repeat = "selection in selections">{{selection.field}}</option>
+          <!-- <option ng-repeat = "selection in selections" value = {{selection.descend}}>{{selection.field}}</option> -->
+          <!-- <option value = {{selection.value}} ng-repeat = "selection in selections">{{selection.field}}</option> -->
         </select>
     </ul>
   </nav>
@@ -39,7 +44,11 @@
     <input type="textarea" id = "description" required ng-model="post.description">
     <button type="submit" ng-click="addPost(this)" ng-disabled="postForm.$invalid">Submit</button>
   </form>
-  <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: sort.field">
+  <h3>{{sort}}</h3>
+  <h3>{{sort.descend}}</h3>
+  <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: 'sort.field': 'sort.descend'">
+    {{ orderBy_expression | orderBy : expression : reverse}}
+
     <div id = "container">
       <section class = "postImage">
         <img src="{{site.image}}" alt="">
