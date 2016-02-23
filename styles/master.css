@@ -130,9 +130,22 @@ img {
 }
 
 .ng-invalid.ng-dirty{
- border-color: #FA787E ;
+   border-color: #FA787E ;
 }
 
 .ng-valid.ng-dirty{
- border-color: #78FA89 ;
+   border-color: #78FA89 ;
+}
+
+.fade.ng-hide-add {
+  animation:0.5s flipOutX ease;
+  /*animation:0.5s lightSpeedOut ease;*/
+}
+
+.fade.ng-hide-remove {
+  animation:0.5s flipInX ease;
+}
+
+.bounceLeft {
+  animation: bounceInLeft 1s;
 }
