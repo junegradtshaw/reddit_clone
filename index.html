@@ -37,14 +37,11 @@
     <input type="text" id = "image" required ng-model="post.image">
     <label for="description">Description </label>
     <input type="textarea" id = "description" required ng-model="post.description">
-    <button type="submit" ng-click="addPost(post)" ng-disabled="postForm.$invalid">Submit</button>
+    <button type="submit" ng-click="addPost(this)" ng-disabled="postForm.$invalid">Submit</button>
   </form>
   <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: sort.field">
-    <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy:0:'-sort.descend' : sort.field"> -->
-  <!-- <div class = "post" ng-repeat = "site in sites | filter:searchable | orderBy: '-votes'"> -->
     <div id = "container">
       <section class = "postImage">
-        <!-- <span class = "helper"></span> -->
         <img src="{{site.image}}" alt="">
       </section>
       <section class = "postText" >
@@ -68,10 +65,11 @@
         <span ng-init="showAddComments=false" ng-click="showAddComments=!showAddComments">Add Comment</span>
         <form name = "commentForm" novalidate ng-show="showAddComments" ng-submit="showAddComments=false" ng-model="commentForm">
           <label for="author">Name </label>
-          <input type="text" id = "author" label = "Name" placeholder="Enter your name" required ng-model="commentFormAuthor">
+          <input type="text" id = "author" label = "Name" placeholder="Enter your name" required ng-model="comment.author">
           <label for="text">Comment </label>
-          <input type="text" id = "text" label = "Comment" placeholder="Enter comment" required ng-model="commentFormText">
-          <button type="submit" ng-click="addComment(site, commentFormAuthor, commentFormText)" ng-disabled="commentForm.$invalid">Submit</button>
+          <input type="text" id = "text" label = "Comment" placeholder="Enter comment" required ng-model="comment.body">
+          <button type="submit" ng-click="addComment(this)" ng-disabled="commentForm.$invalid">Submit</button>
+          <!-- <button type="submit" ng-click="addComment(site, commentFormAuthor, commentFormText)" ng-disabled="commentForm.$invalid">Submit</button> -->
           <!-- <div class="alert"
             ng-show="(commentForm.$invalid)">
             ng-show="((commentFormText.$error && commentFormAuthor.$dirty) || (commentFormText.$error && commentFormText.$dirty))">
@@ -80,15 +78,8 @@
         </form>
         <div ng-show="showComments" ng-repeat="comment in site.comments">
           <div>
-            <p>{{comment.author}}{{" ("}} <span am-time-ago="comment.date"></span> {{") - "}}{{comment.text}}</p>
-            <!-- <span am-time-ago="2016-02-20T15:58:58.909Z">WOW</span> -->
-            <!-- <p>{{comment.author}}{{"("}}<span a-time-ago="2016-02-20T15:58:58.909Z"></span> {{") - "}}{{comment.text}}</p> -->
-            <!-- <p>{{comment.author}}{{"("}}<span am-time-ago="comment.date"></span> {{") - "}}{{comment.text}}</p> -->
-            <!-- <p>{{comment.author}}{{"("}}{{comment.date | date:'yyyy-MM-dd'}}{{") - "}}{{comment.text}}</p> -->
-            <!-- <h5>{{comment.author}}{{"  "}}{{comment.date | moment: 'fromNow'}}</h5> -->
+            <p>{{comment.author}}{{" ("}} <span am-time-ago="comment.date"></span> {{") - "}}{{comment.body}}</p>
             <!-- <time title="{{ comment.date | date:'yyyy-MM-dd HH:mm:ss Z'}}">{{ comment.date | moment: 'fromNow' }}</time> -->
-            <!-- <time title="{{ comment.date | amDateFormat: 'dddd, MMMM Do YYYY, h:mm a' }}">{{ main.time | amCalendar }}</time> -->
-            <!-- {{ comment.date |  moment: 'fromNow' }}">{{ main.time | amCalendar }}</time> -->
           </div>
         </div>
       </section>
