@@ -17,8 +17,8 @@ app.controller("MyController", function($scope) {
       author : "",
       body : "",
     }
-    comment.comment = angular.copy(defaultCommentForm);
-    $scope.showAddComment=false;
+    // comment.comment = angular.copy(defaultCommentForm);
+    $scope.showAddComments=false;
   }
 
   $scope.addPost = function(post) {
