@@ -67,7 +67,8 @@
         </section>
         <i class = "fa fa-pencil"></i>
         <span ng-init="showAddComments=false" ng-click="showAddComments=!showAddComments">Add Comment</span>
-        <form name = "commentForm" class = "fade" novalidate ng-show="showAddComments" ng-submit="showAddComments=false" ng-model="commentForm">
+        <form name = "commentForm" class = "fade" novalidate ng-show="showAddComments" ng-submit="showAddComments=false">
+        <!-- <form name = "commentForm" class = "fade" novalidate ng-show="showAddComments" ng-submit="showAddComments=false" ng-model="commentForm"> -->
           <label for="author">Name </label>
           <input type="text" id = "author" label = "Name" placeholder="Enter your name" required ng-model="comment.author">
           <label for="text">Comment </label>
